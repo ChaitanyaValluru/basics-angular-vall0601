@@ -1,5 +1,4 @@
-{
-  "passengers": [
+[
     {
       "id": 1,
       "fullname": "ChAiTu",
@@ -43,4 +42,3 @@
       "children": null
     }
   ]
-}

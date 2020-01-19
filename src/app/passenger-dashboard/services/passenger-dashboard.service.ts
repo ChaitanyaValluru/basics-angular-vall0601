@@ -6,8 +6,9 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import { of } from 'rxjs/observable/of'
 
-const PASSENGER_API: string = '/api/passengers';
+const PASSENGER_API: string = 'data.json';
 let headers = new Headers({
   'Content-Type': 'application/json'
 });
@@ -20,7 +21,8 @@ export class PassengerDashboardService{
   constructor(private http: Http){}
 
   getPassengers(): Observable<Passenger[]>{
-    return this.http.get(PASSENGER_API).map((response: Response) => response.json()).catch((error: any) => Observable.throw(error.json()));
+    // return this.http.get(PASSENGER_API).map((response: Response) => response.json()).catch((error: any) => Observable.throw(error.json()));
+    return of(this.data);
   }
   getPassengersPromise(): Promise<Passenger[]>{
     return this.http.get(PASSENGER_API).toPromise().then((response: Response) => response.json());
@@ -39,5 +41,50 @@ export class PassengerDashboardService{
   removePassengerPromise(passenger: Passenger): Promise<Passenger>{
     return this.http.delete(`${PASSENGER_API}/${passenger.id}`).toPromise().then((response: Response) => response.json());
   }
+
+  data = [
+    {
+      "id": 1,
+      "fullname": "ChAiTu",
+      "checkedIn": true,
+      "checkInDate": 1490742000000,
+      "children": null
+    },
+    {
+      "id": 2,
+      "fullname": "Rose",
+      "checkedIn": false,
+      "checkInDate": null,
+      "children": [
+        {
+          "name": "Ted",
+          "age": 12
+        },
+        {
+          "name": "Chloe",
+          "age": 7
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "fullname": "Louise",
+      "checkedIn": true,
+      "checkInDate": 1488412800000,
+      "children": [
+        {
+          "name": "Jessica",
+          "age": 1
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "fullname": "Tina",
+      "checkedIn": false,
+      "checkInDate": null,
+      "children": null
+    }
+  ];
 
 }
